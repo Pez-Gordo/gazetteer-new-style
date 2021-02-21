@@ -639,12 +639,7 @@ L.easyButton('<img src="./img/lista.png">', function(btn, map){
     countriesPopup.setLatLng(map.getCenter()).openOn(map);
 }).addTo(map);
 
-btn1.button.style.backgroundColor = '#74d0f0';
-btn2.button.style.backgroundColor = '#74d0f0';
-btn3.button.style.backgroundColor = '#74d0f0';
-btn1.button.style.border= 'none';
-btn2.button.style.border= 'none';
-btn3.button.style.border= 'none';
+
 
 // añadir una escala al mapa
 L.control.scale({
@@ -669,3 +664,5 @@ L.control.watermark = function(opts){
 }
 
 L.control.watermark({position: 'bottomleft'}).addTo(map)
+
+
