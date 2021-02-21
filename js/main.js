@@ -1,8 +1,11 @@
 //global variables
 var border;
 var currencyCode;
+var currencySymbol;
 var countryName;
 let capitalCityWeather;
+let countryLanguage;
+let countryLanguageNative;
 let capitalCityLat;
 let capitalCityLon;
 let iso2CountryCode;
@@ -230,15 +233,21 @@ $('#btnRun').click(function() {
         
           console.log('restCountries', result);
           if (result.status.name == "ok") {
+              capitalCity = result.data.capital;
               currencyCode = result.currency.code;
+              currencySymbol = result.currency.symbol;
               capitalCityWeather= result.data.capital.toLowerCase();
               iso2CountryCode = result.data.alpha2Code;
+              countryLanguage = result.data.languages[0].name;
+              countryLanguageNative = result.data.languages[0].nativeName;
               var countryName2 = result.data.name;
               countryName = countryName2.replace(/\s+/g, '_');
               
               $('#txtName').html(result['data']['name']+ '<br>');
               $('#txtCurrency').html('<strong> ' + result.currency.name + '</strong><br>');
               $('#txtCurrencyCode').html('Code: <strong>' + result.currency.code + '</strong><br>');
+              $('#txtCurrencySymbol').html('Symbol: <strong>' + currencySymbol + '</strong><br>');
+
           
       //wikipedia country extracts
               $.ajax({
@@ -271,7 +280,8 @@ $('#btnRun').click(function() {
                         $('#txtAreaInSqKm').html('Area: <strong>'+result.data[0].areaInSqKm+ '</strong> km²<br>');
                         $('#txtContinent').html('Continent: <strong>'+result.data[0].continent+ '</strong><br>');
                         $('#txtPopulation').html('Population: <strong>'+result.data[0].population+ '</strong><br>');
-                        $('#txtLanguages').html('Languages: <strong>'+ result.data[0].languages + '</strong><br>');
+                        $('#txtLanguages').html('Language: <strong>'+ countryLanguage + '</strong><br>');
+                        $('#txtLanguagesNative').html('Language\'s native name: <strong>'+ countryLanguageNative + '</strong><br>');
                       }
                     },
                   error: function(jqXHR, textStatus, errorThrown) {
@@ -297,7 +307,7 @@ $('#btnRun').click(function() {
                       else if (result.status == "ok") {
                           $('#newsList').html("");
                           for (var i=0; i<result.articles.length; i++) {
-                              $("#newsList").append('<li><a href='+ result.articles[i].link + '>' + result.articles[i].title + '</a></li>');
+                              $("#newsList").append('<a href='+ result.articles[i].link + '>' + result.articles[i].title + '</a><br>');
                       }                
                   }},
                   error: function(jqXHR, textStatus, errorThrown) {
@@ -341,7 +351,7 @@ $('#btnRun').click(function() {
                       if (result.status.name == "ok") {
                       
                       exchangeRate = result.exchangeRate.rates[currencyCode];
-                      $('#txtRate').html('Ex. Rate: <strong>' + exchangeRate.toFixed(3) + '</strong> ' + currencyCode + ' to <strong>1</strong> USD. <br>');
+                      $('#txtRate').html('Exchange Rate: <strong>' + exchangeRate.toFixed(3) + '</strong> ' + currencyCode + ' = <strong>1</strong> USD. <br>');
                       }
                   },
                   error: function(jqXHR, textStatus, errorThrown) {
@@ -362,7 +372,8 @@ $('#btnRun').click(function() {
                       capitalCityLon = result.weatherData.coord.lon;
                       
                       if (result.status.name == "ok") {
-          
+                        
+                          $('#txtHeadlineTitle').html('Weather in ' + capitalCity);                            
                           $('#txtCapitalWeatherCurrent').html('&nbsp;&nbsp;&nbsp;&nbsp;Today: &nbsp;&nbsp;'+ result.weatherData.weather[0].description +'&nbsp;&nbsp; || &nbsp;&nbsp; current temp: &nbsp;' + result.weatherData.main.temp +'&#8451<br>');
                           $('#txtCapitalWeatherLo').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Low: ' + result.weatherData.main.temp_min +'&#8451<br>');
                           $('#txtCapitalWeatherHi').html('&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;High: ' + result.weatherData.main.temp_max +'&#8451<br>');
@@ -405,6 +416,7 @@ $('#btnRun').click(function() {
                                   console.log('wikiPlaces Data',result);
                                   $('#wikiPlaces').html("");
                                   if (result.status.name == "ok") {
+                                      $('#txtHeadlineTitle2').html('Interesting Places in ' + capitalCity);
                                       for (var i=0; i<result.wikiPlaces.length; i++) {
                                           $("#wikiPlaces").append('<li><a href=https://'+result.wikiPlaces[i].wikipediaUrl+'>'+ result.wikiPlaces[i].title +'</a></li>' 
                                           )}
