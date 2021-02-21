@@ -14,6 +14,9 @@ let visitedCountries = [];
 let popup;
 let issTracker = false;
 let quakeMapper = false;
+var btn1;
+var btn2;
+var btn3;
 
 
 var tracker = true;
@@ -302,7 +305,7 @@ $('#btnRun').click(function() {
                       console.log('News Data', result);
                       if (result.status == "No matches for your search.") {
                           //$('#txtHeadlineTitle').hide();
-                          //$('#newsList').hide();
+                          $('#newsList').hide();
                           $('#noNews').html('Sorry, the Newscatcher API does not have articles for this country.');
                       }
                       else if (result.status == "ok") {
@@ -499,7 +502,7 @@ map.on('click', function(e) {
     // Adding buttons
 
 L.easyButton('<img src="./img/eq.png">', function(btn, map){
-    
+    btn1 = btn;
     if (!quakeMapper) {
 
         map.setZoom(3);
@@ -570,7 +573,7 @@ $(window).keypress(function (e) {
 // Adding button to track iss 
 
 L.easyButton('<img src="./img/track.png">', function(btn, map){
-    
+    btn2 = btn;
     if (!issTracker){
         //alert('Press "T" to toggle on/off focus on ISS')
         issTracker = true;
@@ -624,7 +627,7 @@ L.easyButton('<img src="./img/track.png">', function(btn, map){
 // Adding button for visited countries list
 
 L.easyButton('<img src="./img/lista.png">', function(btn, map){
-    
+    btn3 = btn;
     popup = '<strong>Visited Countries: </strong><br><br>';
 
     for (var i = 0; i < visitedCountries.length; i++) {
@@ -636,3 +639,33 @@ L.easyButton('<img src="./img/lista.png">', function(btn, map){
     countriesPopup.setLatLng(map.getCenter()).openOn(map);
 }).addTo(map);
 
+btn1.button.style.backgroundColor = '#74d0f0';
+btn2.button.style.backgroundColor = '#74d0f0';
+btn3.button.style.backgroundColor = '#74d0f0';
+btn1.button.style.border= 'none';
+btn2.button.style.border= 'none';
+btn3.button.style.border= 'none';
+
+// añadir una escala al mapa
+L.control.scale({
+    metric: true,
+    imperial: false,
+    position: 'bottomleft'
+}).addTo(map)
+
+// adding logo watermark
+L.Control.Watermark = L.Control.extend({
+    onAdd: function(map){
+        var img = L.DomUtil.create('img')
+        img.src = './img/itcslogo.png'
+        img.style.width = '120px'
+        return img
+    },
+    onRemove: function(map){},
+})
+
+L.control.watermark = function(opts){
+    return new L.Control.Watermark(opts)
+}
+
+L.control.watermark({position: 'bottomleft'}).addTo(map)

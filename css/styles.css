@@ -11,6 +11,10 @@ html, body, #map {
   position: relative;     
 }
 
+.leaflet-grab {
+  cursor: default;
+}
+
 .overlay2 {
   
   height: 60px;
@@ -22,11 +26,11 @@ html, body, #map {
   
   pointer-events: auto;   
 }
-
+/*
 .leaflet-control-container { 
-  position: absolute; 
-  top: 65px;
-} 
+  position: relative; 
+  z-index: 5;
+} */
 
 h3 {
   padding-left: 1rem;
@@ -326,14 +330,61 @@ button {
 }
 
 .leaflet-control-scale-line {
-  position: relative;
-  z-index: 35;
+  position: absolute;
+  bottom: 30px;
+  z-index: 3;
 }
 
 
 .leaflet-control-zoom {
-  position: absolute; 
+  position: relative; 
+  top: 210px;
+}
+
+.button-state {
+  padding-right: 2px;
+  background-color: #51ce2f;
+  border: 0px;
+  opacity: 1;
+}
+
+.state-unnamed-state {
+  background-color: #51ce2f;
+  border: 0px;
+  opacity: 1;
+}
+
+.unnamed-state-active {
+  background-color: #51ce2f;
+  border: 0px;
   
 }
 
+.easy-button-button {
+  background-color: #51ce2f;
+  border: 0px;
 
+}
+
+.unnamed-state-active {
+  background-color: #51ce2f;
+  border: 0px;
+  
+}
+
+.state-unnamed-state {
+  background-color: #51ce2f;
+  border: 0px;
+}
+
+.leaflet-control-layers {
+  position: relative; 
+  top: 70px;
+  z-index: 15;
+}
+
+.leaflet-left {
+  z-index: 52;
+  position: sticky;
+  bottom: 250px;
+}
