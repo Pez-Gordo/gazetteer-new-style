@@ -161,9 +161,10 @@ navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
 // adding borders to our map
 
 $('#selCountry').on('change', function() {
+    
   let countryCode = $('#selCountry').val();
   let countryOptionText= $('#selCountry').find('option:selected').text();
-   
+  
   // Checking the new visited country is not already in the array and push it
   if(!visitedCountries.includes(countryOptionText)) {
     visitedCountries.push(countryOptionText)
@@ -300,8 +301,8 @@ $('#btnRun').click(function() {
                   success: function(result) {
                       console.log('News Data', result);
                       if (result.status == "No matches for your search.") {
-                          $('#txtHeadlineTitle').hide();
-                          $('#newsList').hide();
+                          //$('#txtHeadlineTitle').hide();
+                          //$('#newsList').hide();
                           $('#noNews').html('Sorry, the Newscatcher API does not have articles for this country.');
                       }
                       else if (result.status == "ok") {
